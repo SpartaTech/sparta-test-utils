@@ -65,7 +65,7 @@ public class UnitTestAsserterLogbackAppender implements Appender<ILoggingEvent> 
      * 
      * @param level expected for the log entry
      * @param logMessage message expected for the log entry
-     * @param params list of parameters for the log entry. {@link also ExpectValue}
+     * @param params list of parameters for the log entry.
      */
     public void addExpectation(Level level, String logMessage, Object...params) {
         expectations.add(new LogEntryItem(level, logMessage, params));
