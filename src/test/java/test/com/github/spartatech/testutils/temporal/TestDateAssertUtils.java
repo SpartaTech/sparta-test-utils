@@ -90,12 +90,12 @@ public class TestDateAssertUtils extends DateAssertUtils {
             if (!e.getMessage().startsWith("Field HOUR_OF_DAY mismatch")) {
                 Assert.fail("Invalid Message - " + e.getMessage());
             }
-            if (!e.getExpected().equals(String.valueOf(cal.get(Calendar.HOUR)+2))) {
-                Assert.fail("Invalid expected "+ String.valueOf(cal.get(Calendar.HOUR)+2) + " But was: "+ e.getExpected());
+            if (!e.getExpected().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+2))) {
+                Assert.fail("Invalid expected "+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+2) + " But was: "+ e.getExpected());
             }
             
-            if (!e.getActual().equals(String.valueOf(cal.get(Calendar.HOUR)))) {
-                Assert.fail("Invalid actual "+ String.valueOf(cal.get(Calendar.HOUR)) + " But was: "+ e.getActual());
+            if (!e.getActual().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)))) {
+                Assert.fail("Invalid actual "+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + " But was: "+ e.getActual());
             }
             
             throw e;
@@ -115,12 +115,12 @@ public class TestDateAssertUtils extends DateAssertUtils {
             if (!e.getMessage().startsWith(MESSAGE)) {
                 Assert.fail("Invalid Message - " + e.getMessage());
             }
-            if (!e.getExpected().equals(String.valueOf(cal.get(Calendar.HOUR)+2))) {
-                Assert.fail("Invalid expected "+ String.valueOf(cal.get(Calendar.HOUR)+2) + " But was: "+ e.getExpected());
+            if (!e.getExpected().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+2))) {
+                Assert.fail("Invalid expected "+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+2) + " But was: "+ e.getExpected());
             }
             
-            if (!e.getActual().equals(String.valueOf(cal.get(Calendar.HOUR)))) {
-                Assert.fail("Invalid actual "+ String.valueOf(cal.get(Calendar.HOUR)) + " But was: "+ e.getActual());
+            if (!e.getActual().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)))) {
+                Assert.fail("Invalid actual "+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + " But was: "+ e.getActual());
             }
             
             throw e;
