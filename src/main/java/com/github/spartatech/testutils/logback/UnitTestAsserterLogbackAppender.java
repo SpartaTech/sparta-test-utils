@@ -6,6 +6,8 @@ import java.util.List;
 import org.junit.ComparisonFailure;
 import org.slf4j.LoggerFactory;
 
+import com.github.spartatech.testutils.logback.constant.ExpectValue;
+
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -63,7 +65,7 @@ public class UnitTestAsserterLogbackAppender implements Appender<ILoggingEvent> 
      * 
      * @param level expected for the log entry
      * @param logMessage message expected for the log entry
-     * @param params list of parameters for the log entry. {@link also see com.transamerica.tbs.financialengines.core.repository.ExpectValue}
+     * @param params list of parameters for the log entry. {@link also ExpectValue}
      */
     public void addExpectation(Level level, String logMessage, Object...params) {
         expectations.add(new LogEntryItem(level, logMessage, params));
@@ -105,8 +107,8 @@ public class UnitTestAsserterLogbackAppender implements Appender<ILoggingEvent> 
             for (int i = 0; i < entry.getParams().length; i++) {
                 Object expectedParam = entry.getParams()[i];
                 Object actualParam = event.getArgumentArray()[i];
-                
-                if (expectedParam == ExpectValue.ANY) {
+
+                if (ExpectValue.ANY == expectedParam) {
                     continue;
                 }
                 

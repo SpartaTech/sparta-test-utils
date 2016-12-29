@@ -103,7 +103,7 @@ public abstract class DateAssertUtils {
      * 
      * @param fieldId Field Id, value
      * @return Field Name 
-     * @throws Exception
+     * @throws FieldNotFoundException
      */
     private static String findCalendarFieldName(int fieldId) throws FieldNotFoundException {
         for (Field field : Calendar.class.getFields()) {

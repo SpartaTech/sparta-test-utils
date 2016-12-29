@@ -1,4 +1,4 @@
-package com.github.spartatech.testutils.logback;
+package com.github.spartatech.testutils.logback.constant;
 
 /** 
  * 
