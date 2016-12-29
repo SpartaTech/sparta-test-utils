@@ -6,7 +6,7 @@
 
 	<groupId>com.github.spartatech</groupId>
 	<artifactId>sparta-test-utils</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.3</version>
 
 	<name>Sparta Test Utils</name>
 	<description>Utility classes for unit testing.</description>
