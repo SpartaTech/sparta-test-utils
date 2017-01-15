@@ -72,7 +72,7 @@ public abstract class DateAssertUtils {
      * @param expected expected date
      * @param actual actual date
      * @param format format to be applied to both dates before comparing
-     * @throws ComparisonFailure
+     * @throws ComparisonFailure in case comparison fails
      */
     public static void assertDateByFormat(String message, Date expected, Date actual, String format) throws ComparisonFailure {
         final SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -92,7 +92,7 @@ public abstract class DateAssertUtils {
      * @param expected expected date
      * @param actual actual date
      * @param format format to be applied to both dates before comparing
-     * @throws ComparisonFailure
+     * @throws ComparisonFailure in case comparison fails
      */
     public static void assertDateByFormat(Date expected, Date actual, String format) throws ComparisonFailure {
         assertDateByFormat(null, expected, actual, format);
@@ -103,7 +103,7 @@ public abstract class DateAssertUtils {
      * 
      * @param fieldId Field Id, value
      * @return Field Name 
-     * @throws FieldNotFoundException
+     * @throws FieldNotFoundException when the fields does not exist for Calendar
      */
     private static String findCalendarFieldName(int fieldId) throws FieldNotFoundException {
         for (Field field : Calendar.class.getFields()) {

@@ -31,6 +31,7 @@ public class CollectionAssert {
     /**
      * Compares two lists using the comparator
      * 
+     * @param <A> Type of list element
      * @param listOne left side list
      * @param listTwo right side list
      * @param elementComparator comparator to compare records
@@ -66,6 +67,7 @@ public class CollectionAssert {
     /**
      * Assert that two lists are same using reflection to compare elements. 
      * 
+     * @param <A> Type of list element
      * @param listOne List one to be compared
      * @param listTwo list two compared
      * @param excludedFields fields to exclude from comparison

@@ -70,7 +70,7 @@ public class UnitTestAsserterLogback  {
      * Replay expectations to check if all logs happened.
      * Analyzes in order and all logs supposed to be there 
      * 
-     * @throws AssertionError
+     * @throws AssertionError Throws an assertion error when the asserts fail
      */
     public void assertLogExpectations() throws AssertionError {
         if (events.size() != expectations.size()) {
