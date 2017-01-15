@@ -1,4 +1,6 @@
 # sparta-test-utils
+[![Build Status](https://travis-ci.org/SpartaTech/sparta-test-utils.svg?branch=master)](https://travis-ci.org/SpartaTech/sparta-test-utils)
+
 *Library with Unit Test utilities.*
 
 Sparta Test Utils provides several assert utilities to help you unit testing your Java application. These helpers include: 
