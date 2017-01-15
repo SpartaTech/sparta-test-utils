@@ -1,13 +1,3 @@
-/*
- * Copyright (c) 2015 Transamerica Corporation. ("Transamerica" or "us"). All Rights Reserved.
- * 
- * This software is the confidential and proprietary information of 
- * Transamerica ("Confidential Information"). 
- * 
- * You shall not disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with Transamerica.
- */
 package test.com.github.spartatech.testutils.temporal;
 
 import java.text.SimpleDateFormat;
@@ -25,10 +15,10 @@ import com.github.spartatech.testutils.temporal.DateAssertUtils;
  * 
  * Unit tests for Date Assert Utils.
  * 
- * @author ddiehl - Transamerica Technology Services
+ * @author Daniel Conde Diehl
  * 
  * History: 
- *    Dec 29, 2016 - ddiehl
+ *    Dec 29, 2016 - Daniel Conde Diehl
  *  
  */
 public class TestDateAssertUtils extends DateAssertUtils {

@@ -1,13 +1,3 @@
-/*
- * Copyright (c) 2015 Transamerica Corporation. ("Transamerica" or "us"). All Rights Reserved.
- * 
- * This software is the confidential and proprietary information of 
- * Transamerica ("Confidential Information"). 
- * 
- * You shall not disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with Transamerica.
- */
 package test.com.github.spartatech.testutils.logback;
 
 import org.junit.ComparisonFailure;
@@ -15,7 +5,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.spartatech.testutils.logback.UnitTestAsserterLogbackAppender;
+import com.github.spartatech.testutils.logback.UnitTestAsserterLogback;
 import com.github.spartatech.testutils.logback.constant.ExpectValue;
 
 import ch.qos.logback.classic.Level;
@@ -24,21 +14,21 @@ import ch.qos.logback.classic.Level;
  * 
  * TODO <Class Description>
  * 
- * @author ddiehl - Transamerica Technology Services
+ * @author Daniel Conde Diehl
  * 
  * History: 
- *    Dec 29, 2016 - ddiehl
+ *    Dec 29, 2016 - Daniel Conde Diehl
  *  
  */
-public class TestUnitTestAsserterLogbackAppender {
+public class TestUnitTestAsserterLogback {
     
-    public static final Logger LOGGER = LoggerFactory.getLogger(TestUnitTestAsserterLogbackAppender.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(TestUnitTestAsserterLogback.class);
     
     @Test
     public void testLogByClass() {
         final String message = "teste message";
         
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message);
         
         LOGGER.info(message);
@@ -50,7 +40,7 @@ public class TestUnitTestAsserterLogbackAppender {
     public void testLogByClassLevelMismatch() {
         final String message = "teste message";
         
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.DEBUG, message);
         
         LOGGER.info(message);
@@ -62,7 +52,7 @@ public class TestUnitTestAsserterLogbackAppender {
     public void testLogByClassNoMessages() {
         final String message = "teste message";
         
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message);
         
         spyAppender.assertLogExpectations();
@@ -73,7 +63,7 @@ public class TestUnitTestAsserterLogbackAppender {
     public void testLogByClassExtraMessages() {
         final String message = "teste message";
         
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message);
         
         LOGGER.info(message);
@@ -87,7 +77,7 @@ public class TestUnitTestAsserterLogbackAppender {
     public void testLogByClassDifferentMessage() {
         final String message = "teste message";
         
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message);
         
         LOGGER.info("other message");
@@ -100,7 +90,7 @@ public class TestUnitTestAsserterLogbackAppender {
     public void testLogByClassNotInOrderMessages() {
         final String message = "teste message";
         
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, "other message");
         spyAppender.addExpectation(Level.INFO, message);
         
@@ -114,7 +104,7 @@ public class TestUnitTestAsserterLogbackAppender {
     public void testLogByClassInOrderMessages() {
         final String message = "teste message";
         
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message);
         spyAppender.addExpectation(Level.INFO, "other message");
         
@@ -130,7 +120,7 @@ public class TestUnitTestAsserterLogbackAppender {
         final String loggerName = "log-mock";
         
         
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(loggerName);
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(loggerName);
         spyAppender.addExpectation(Level.INFO, message);
         spyAppender.addExpectation(Level.INFO, "other message");
         
@@ -147,7 +137,7 @@ public class TestUnitTestAsserterLogbackAppender {
         final String message = "new message {}, {}";
         final int param1 = 1;
         final String param2 = "New Param";
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message, param1, param2);
         
         LOGGER.info(message, param1, param2);
@@ -160,7 +150,7 @@ public class TestUnitTestAsserterLogbackAppender {
         final String message = "new message {}, {}";
         final int param1 = 1;
         final String param2 = "New Param";
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message, param1, param2);
         
         LOGGER.info(message, param1);
@@ -173,7 +163,7 @@ public class TestUnitTestAsserterLogbackAppender {
         final String message = "new message {}, {}";
         final int param1 = 1;
         final String param2 = "New Param";
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message, param1, param2);
         
         LOGGER.info(message, param1, param2, "bla");
@@ -186,7 +176,7 @@ public class TestUnitTestAsserterLogbackAppender {
         final String message = "new message {}, {}";
         final int param1 = 1;
         final String param2 = "New Param";
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message, param1, param2);
         
         LOGGER.info(message, param2, param1);
@@ -199,7 +189,7 @@ public class TestUnitTestAsserterLogbackAppender {
         final String message = "new message {}, {}";
         final int param1 = 1;
         final String param2 = "New Param";
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message, param1, ExpectValue.ANY);
         
         LOGGER.info(message, param1, param2);
@@ -211,7 +201,7 @@ public class TestUnitTestAsserterLogbackAppender {
     public void testLogByClassWithParametersNull() {
         final String message = "new message {}, {}";
         final int param1 = 1;
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message, param1, null);
         
         LOGGER.info(message, param1, null);
@@ -224,7 +214,7 @@ public class TestUnitTestAsserterLogbackAppender {
         final String message = "new message {}, {}";
         final int param1 = 1;
         final String param2 = "New Param";
-        final UnitTestAsserterLogbackAppender spyAppender = new UnitTestAsserterLogbackAppender(this.getClass());
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message, param1, param2);
         
         LOGGER.info(message, param1, null);
