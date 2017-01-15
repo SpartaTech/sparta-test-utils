@@ -12,7 +12,7 @@ import ch.qos.logback.classic.Level;
 
 /** 
  * 
- * TODO <Class Description>
+ * Unit tests for The Logback asserter.
  * 
  * @author Daniel Conde Diehl
  * 
