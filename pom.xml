@@ -6,7 +6,7 @@
 
 	<groupId>com.github.spartatech</groupId>
 	<artifactId>sparta-test-utils</artifactId>
-	<version>0.3</version>
+	<version>0.4</version>
 
 	<name>Sparta Test Utils</name>
 	<description>Utility classes for unit testing.</description>
@@ -54,7 +54,7 @@
 
 
 	<properties>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<slf4j.version>[1.6.1,)</slf4j.version>
 		<commons-lang.version>[3.2.1,)</commons-lang.version>
 		<commons-io.version>[2.4,)</commons-io.version>
