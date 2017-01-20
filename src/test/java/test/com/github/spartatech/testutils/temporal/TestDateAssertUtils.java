@@ -65,8 +65,13 @@ public class TestDateAssertUtils extends DateAssertUtils {
     public void testAssertDateAssertFieldsMatching() throws Exception {
         final Calendar cal = Calendar.getInstance();
         final Date expected = cal.getTime();
-        cal.add(Calendar.HOUR_OF_DAY, -2);
+        int hourDiff = -2;
+        if (cal.get(Calendar.HOUR_OF_DAY) < 2) {
+        	hourDiff = 2;
+        }
+    	cal.add(Calendar.HOUR_OF_DAY, hourDiff);
         final Date actual = cal.getTime();
+
         
         LOGGER.info("Fields Matching Unit Test. Expected:{}, actual: {}", expected, actual);
         DateAssertUtils.assertDate(expected, actual, Calendar.DATE, Calendar.MONTH, Calendar.YEAR);
