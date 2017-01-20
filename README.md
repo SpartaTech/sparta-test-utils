@@ -1,5 +1,6 @@
 # sparta-test-utils
 [![Build Status](https://travis-ci.org/SpartaTech/sparta-test-utils.svg?branch=master)](https://travis-ci.org/SpartaTech/sparta-test-utils)
+[![Coverage Status](https://coveralls.io/repos/github/SpartaTech/sparta-test-utils/badge.svg?branch=master)](https://coveralls.io/github/SpartaTech/sparta-test-utils?branch=master)
 
 *Library with Unit Test utilities.*
 
