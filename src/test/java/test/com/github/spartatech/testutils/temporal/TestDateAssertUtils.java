@@ -68,7 +68,7 @@ public class TestDateAssertUtils extends DateAssertUtils {
         cal.add(Calendar.HOUR_OF_DAY, -2);
         final Date actual = cal.getTime();
         
-        LOGGER.info("Fields Matching. Expected:{}, actual: {}", expected, actual);
+        LOGGER.info("Fields Matching Unit Test. Expected:{}, actual: {}", expected, actual);
         DateAssertUtils.assertDate(expected, actual, Calendar.DATE, Calendar.MONTH, Calendar.YEAR);
     }
     
