@@ -82,7 +82,7 @@ public class TestDateAssertUtils extends DateAssertUtils {
         }
     	cal.add(Calendar.HOUR_OF_DAY, hourDiff);
         final Date actual = cal.getTime();
-        
+
         try {
             DateAssertUtils.assertDate(expected, actual, Calendar.DATE, Calendar.MONTH, Calendar.YEAR, Calendar.HOUR_OF_DAY);
         } catch (ComparisonFailure e) {
