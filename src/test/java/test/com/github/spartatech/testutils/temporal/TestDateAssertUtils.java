@@ -7,6 +7,8 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.ComparisonFailure;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.spartatech.testutils.exception.FieldNotFoundException;
 import com.github.spartatech.testutils.temporal.DateAssertUtils;
@@ -22,6 +24,8 @@ import com.github.spartatech.testutils.temporal.DateAssertUtils;
  *  
  */
 public class TestDateAssertUtils extends DateAssertUtils {
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestDateAssertUtils.class);
+	
     private static final String MESSAGE = "test message";
     
     @Test
@@ -64,6 +68,7 @@ public class TestDateAssertUtils extends DateAssertUtils {
         cal.add(Calendar.HOUR_OF_DAY, -2);
         final Date actual = cal.getTime();
         
+        LOGGER.info("Fields Matching. Expected:{}, actual: {}", expected, actual);
         DateAssertUtils.assertDate(expected, actual, Calendar.DATE, Calendar.MONTH, Calendar.YEAR);
     }
     
