@@ -7,6 +7,8 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.ComparisonFailure;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.spartatech.testutils.exception.FieldNotFoundException;
 import com.github.spartatech.testutils.temporal.DateAssertUtils;
@@ -22,6 +24,8 @@ import com.github.spartatech.testutils.temporal.DateAssertUtils;
  *  
  */
 public class TestDateAssertUtils extends DateAssertUtils {
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestDateAssertUtils.class);
+	
     private static final String MESSAGE = "test message";
     
     @Test
@@ -64,6 +68,7 @@ public class TestDateAssertUtils extends DateAssertUtils {
         cal.add(Calendar.HOUR_OF_DAY, -2);
         final Date actual = cal.getTime();
         
+        LOGGER.info("Fields Matching. Expected:{}, actual: {}", expected, actual);
         DateAssertUtils.assertDate(expected, actual, Calendar.DATE, Calendar.MONTH, Calendar.YEAR);
     }
     
@@ -71,7 +76,11 @@ public class TestDateAssertUtils extends DateAssertUtils {
     public void testAssertDateAssertFieldsNoMatching() throws Exception {
         final Calendar cal = Calendar.getInstance();
         final Date expected = cal.getTime();
-        cal.add(Calendar.HOUR_OF_DAY, -2);
+        int hourDiff = -2;
+        if (cal.get(Calendar.HOUR_OF_DAY) < 2) {
+        	hourDiff = 2;
+        }
+    	cal.add(Calendar.HOUR_OF_DAY, hourDiff);
         final Date actual = cal.getTime();
         
         try {
@@ -80,8 +89,8 @@ public class TestDateAssertUtils extends DateAssertUtils {
             if (!e.getMessage().startsWith("Field HOUR_OF_DAY mismatch")) {
                 Assert.fail("Invalid Message - " + e.getMessage());
             }
-            if (!e.getExpected().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+2))) {
-                Assert.fail("Invalid expected "+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+2) + " But was: "+ e.getExpected());
+            if (!e.getExpected().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+(hourDiff *-1)))) {
+                Assert.fail("Invalid expected "+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+(hourDiff *-1)) + " But was: "+ e.getExpected());
             }
             
             if (!e.getActual().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)))) {
