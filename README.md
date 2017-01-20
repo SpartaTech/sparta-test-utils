@@ -1,6 +1,7 @@
 # sparta-test-utils
 [![Build Status](https://travis-ci.org/SpartaTech/sparta-test-utils.svg?branch=master)](https://travis-ci.org/SpartaTech/sparta-test-utils)
 [![Coverage Status](https://coveralls.io/repos/github/SpartaTech/sparta-test-utils/badge.svg?branch=master)](https://coveralls.io/github/SpartaTech/sparta-test-utils?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.spartatech/sparta-test-utils/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.github.spartatech/sparta-test-utils/)
 
 *Library with Unit Test utilities.*
 
