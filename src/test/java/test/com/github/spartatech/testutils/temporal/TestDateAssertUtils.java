@@ -110,7 +110,11 @@ public class TestDateAssertUtils extends DateAssertUtils {
     public void testAssertDateAssertFieldsNoMatchingWithMessage() throws Exception {
         final Calendar cal = Calendar.getInstance();
         final Date expected = cal.getTime();
-        cal.add(Calendar.HOUR_OF_DAY, -2);
+        int hourDiff = -2;
+        if (cal.get(Calendar.HOUR_OF_DAY) < 2) {
+        	hourDiff = 2;
+        }
+    	cal.add(Calendar.HOUR_OF_DAY, hourDiff);
         final Date actual = cal.getTime();
         
         try {
@@ -119,8 +123,8 @@ public class TestDateAssertUtils extends DateAssertUtils {
             if (!e.getMessage().startsWith(MESSAGE)) {
                 Assert.fail("Invalid Message - " + e.getMessage());
             }
-            if (!e.getExpected().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+2))) {
-                Assert.fail("Invalid expected "+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+2) + " But was: "+ e.getExpected());
+            if (!e.getExpected().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+(hourDiff *-1)))) {
+                Assert.fail("Invalid expected "+ String.valueOf(cal.get(Calendar.HOUR_OF_DAY)+(hourDiff *-1)) + " But was: "+ e.getExpected());
             }
             
             if (!e.getActual().equals(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)))) {
