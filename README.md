@@ -103,6 +103,7 @@ Uses:
 * Assert Date by a specific DateFormat
 
 ###Assert by date elements
+
 You can assert a date only by some elements, let's say you want to assert the Date, but only the date piece, not time. 
 
 ***Usage:***
@@ -112,6 +113,7 @@ DateAssertUtils.assertDate(expected, actual, Calendar.DATE, Calendar.MONTH, Cale
 ~~~
 
 ###Assert by DateFormat
+
 Another usage, instead of informing which fields to test, is to give a DateFormat String to be compared. In this case, code will convert the Date to a String in that format and then compare.
 
 ***Usage:***
@@ -121,6 +123,7 @@ DateAssertUtils.assertDateByFormat("Date Did no match", expected, actual, "yyyy-
 ~~~
 
 ##Exception Asserts
+
 Helpers to assert Exceptions. Provides more control to verify the Exception scenarios than @Test(expected=Exception)
 
 Uses:
@@ -128,6 +131,7 @@ Uses:
 * Assert Exception message
 
 ###Assert exception message
+
 Let's you assert that teh exception being thrown is the one you're expecting also matching the message.
 
 * The first parameter is the exception you are expecting with the message that should happen.
