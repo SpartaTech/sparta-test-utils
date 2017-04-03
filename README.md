@@ -94,7 +94,7 @@ public void test() {
 }
 ~~~
 
-##Temporal Asserts
+## Temporal Asserts
 Helpers to test Java Dates. 
 
 Uses:
@@ -102,7 +102,7 @@ Uses:
 * Assert only some parts of a Date object
 * Assert Date by a specific DateFormat
 
-###Assert by date elements
+### Assert by date elements
 
 You can assert a date only by some elements, let's say you want to assert the Date, but only the date piece, not time. 
 
@@ -112,7 +112,7 @@ You can assert a date only by some elements, let's say you want to assert the Da
 DateAssertUtils.assertDate(expected, actual, Calendar.DATE, Calendar.MONTH, Calendar.YEAR);
 ~~~
 
-###Assert by DateFormat
+### Assert by DateFormat
 
 Another usage, instead of informing which fields to test, is to give a DateFormat String to be compared. In this case, code will convert the Date to a String in that format and then compare.
 
@@ -122,7 +122,7 @@ Another usage, instead of informing which fields to test, is to give a DateForma
 DateAssertUtils.assertDateByFormat("Date Did no match", expected, actual, "yyyy-MM-dd HH:mm:ss");
 ~~~
 
-##Exception Asserts
+## Exception Asserts
 
 Helpers to assert Exceptions. Provides more control to verify the Exception scenarios than @Test(expected=Exception)
 
@@ -130,7 +130,7 @@ Uses:
 
 * Assert Exception message
 
-###Assert exception message
+### Assert exception message
 
 Let's you assert that teh exception being thrown is the one you're expecting also matching the message.
 
