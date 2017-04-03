@@ -142,12 +142,3 @@ ExceptionAssert.assertExceptionMessage(new Exception("Message Expected"), false,
 			//Call the method to be tested
 	});
 ~~~
-
-###Assert by DateFormat
-Another usage, instead of informing which fields to test, is to give a DateFormat String to be compared. In this case, code will convert the Date to a String in that format and then compare.
-
-***Usage:***
-
-~~~Java
-DateAssertUtils.assertDateByFormat("Date Did no match", expected, actual, "yyyy-MM-dd HH:mm:ss");
-~~~
