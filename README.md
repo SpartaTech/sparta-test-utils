@@ -120,3 +120,34 @@ Another usage, instead of informing which fields to test, is to give a DateForma
 DateAssertUtils.assertDateByFormat("Date Did no match", expected, actual, "yyyy-MM-dd HH:mm:ss");
 ~~~
 
+##Exception Asserts
+Helpers to assert Exceptions. Provides more control to verify the Exception scenarios than @Test(expected=Exception)
+
+Uses:
+
+* Assert Exception message
+
+###Assert exception message
+Let's you assert that teh exception being thrown is the one you're expecting also matching the message.
+
+* The first parameter is the exception you are expecting with the message that should happen.
+* The second parameter is a boolean indicating of the exception happened in the tested method should be thrown or swallowed. You can use true if you want to stop execution and in you annotation use @Test(expected=Exception), or false if you just want to assert this exception, and finish the test.
+* the third parameter is the block of code that you want to be tested (the one that suppose to throw the exception).
+
+***Usage:***
+
+~~~Java
+ExceptionAssert.assertExceptionMessage(new Exception("Message Expected"), false, 
+	() -> {
+			//Call the method to be tested
+	});
+~~~
+
+###Assert by DateFormat
+Another usage, instead of informing which fields to test, is to give a DateFormat String to be compared. In this case, code will convert the Date to a String in that format and then compare.
+
+***Usage:***
+
+~~~Java
+DateAssertUtils.assertDateByFormat("Date Did no match", expected, actual, "yyyy-MM-dd HH:mm:ss");
+~~~

@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *    Jan 14, 2017 - ddiehl
  *  
  */
-public class CollectionAssert {
+public abstract class CollectionAssert {
     
     public static final Logger LOGGER = LoggerFactory.getLogger(CollectionAssert.class);
     
@@ -57,9 +57,9 @@ public class CollectionAssert {
         }
         
         if (!listTwoCopy.isEmpty() || !listOneCopy.isEmpty()) {
-            final StringBuilder msg =  new StringBuilder("Lists are not similar.");
-            listOneCopy.forEach(item -> msg.append("List one: ").append("Remaining list one: " + ReflectionToStringBuilder.toString(item)).append(System.getProperty("line.separator")));
-            listTwoCopy.forEach(item -> msg.append("List one: ").append("Remaining list two: " + ReflectionToStringBuilder.toString(item)).append(System.getProperty("line.separator")));
+            final StringBuilder msg =  new StringBuilder("Lists are not similar.").append(System.getProperty("line.separator"));
+            listOneCopy.forEach(item -> msg.append("List one: ").append("Remaining: " + ReflectionToStringBuilder.toString(item)).append(System.getProperty("line.separator")));
+            listTwoCopy.forEach(item -> msg.append("List two: ").append("Remaining: " + ReflectionToStringBuilder.toString(item)).append(System.getProperty("line.separator")));
             Assert.fail(msg.toString());
         }
     }

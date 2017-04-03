@@ -160,35 +160,16 @@ public class UnitTestAsserterLogback  {
         }
 
         /**
-         * @param level the level to set
-         */
-        public void setLevel(Level level) {
-            this.level = level;
-        }
-
-        /**
          * @return the message
          */
         public String getMessage() {
             return message;
         }
         /**
-         * @param message the message to set
-         */
-        public void setMessage(String message) {
-            this.message = message;
-        }
-        /**
          * @return the params
          */
         public Object[] getParams() {
             return params;
-        }
-        /**
-         * @param params the params to set
-         */
-        public void setParams(Object[] params) {
-            this.params = params;
         }
     }
 };

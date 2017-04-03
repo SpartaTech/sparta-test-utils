@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ import com.github.spartatech.testutils.colletion.CollectionAssert;
  *    Jan 14, 2017 - ddiehl
  *  
  */
-public class TestCollectionAssert {
+public class TestCollectionAssert extends CollectionAssert {
 
     @Test
     public void testAssertReflectionSameList() {
@@ -81,7 +82,17 @@ public class TestCollectionAssert {
         
         try {
             CollectionAssert.assertList(listOne, listTwo, (a,b) -> a.equals(b)? 0 : 1);
-        } catch(AssertionError e) {}
+        } catch(AssertionError e) {
+        	final String br = System.getProperty("line.separator");
+        	Assert.assertEquals(
+        			"Lists are not similar." +  br
+        			+ "List one: Remaining: " + ReflectionToStringBuilder.toString(listOne.get(0)) + br
+        			+ "List one: Remaining: " + ReflectionToStringBuilder.toString(listOne.get(1)) + br
+        			+ "List two: Remaining: " + ReflectionToStringBuilder.toString(listTwo.get(0)) + br
+        			+ "List two: Remaining: " + ReflectionToStringBuilder.toString(listTwo.get(1)) + br
+        			,e.getMessage()
+        			);
+        }
     }
     
     @Test

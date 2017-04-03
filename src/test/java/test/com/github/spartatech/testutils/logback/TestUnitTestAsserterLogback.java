@@ -146,6 +146,19 @@ public class TestUnitTestAsserterLogback {
     }
     
     @Test(expected=ComparisonFailure.class)
+    public void testLogByClassWithNullParameters() {
+        final String message = "new message {}, {}";
+        final int param1 = 1;
+        final String param2 = "New Param";
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
+        spyAppender.addExpectation(Level.INFO, message, null, param2);
+        
+        LOGGER.info(message, param1, param2);
+        
+        spyAppender.assertLogExpectations();
+    }
+    
+    @Test(expected=ComparisonFailure.class)
     public void testLogByClassWithIncorrectLessParameters() {
         final String message = "new message {}, {}";
         final int param1 = 1;
