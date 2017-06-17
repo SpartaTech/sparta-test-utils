@@ -85,7 +85,7 @@ public class UnitTestAsserterLogback  {
      * Analyzes in order and all logs supposed to be there 
      * 
      * @param ignoreExtraMessages false -> if any message other than ones expected happens it fail, also check in order, 
-     * 							  true -> ensure that messages that were expected happens, allows extra messages and does not check message order 
+     * 							  true -> ensure that messages that were expected happens, allows extra messages and does not check 
      * @throws AssertionError Throws an assertion error when the asserts fail
      */
 	public void assertLogExpectations(boolean ignoreExtraMessages) throws AssertionError {
@@ -166,7 +166,7 @@ public class UnitTestAsserterLogback  {
      * Attached the log to the logback. 
      */
     private void attachAppenderToLogback() {
-        Logger root = (Logger) LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
+        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         root.addAppender(appender);
     }
     
