@@ -84,8 +84,8 @@ public class UnitTestAsserterLogback  {
      * Replay expectations to check if all logs happened.
      * Analyzes in order and all logs supposed to be there 
      * 
-     * @param ignoreExtraMessages false -> if any message other than ones expected happens it fail, also check in order, 
-     * 							  true -> ensure that messages that were expected happens, allows extra messages and does not check 
+     * @param ignoreExtraMessages false - if any message other than ones expected happens it fail, also check in order, 
+     * 							  true - ensure that messages that were expected happens, allows extra messages and does not check 
      * @throws AssertionError Throws an assertion error when the asserts fail
      */
 	public void assertLogExpectations(boolean ignoreExtraMessages) throws AssertionError {

@@ -60,6 +60,10 @@ The way it works is:
 * Call the method to be tested
 * Call the asserter method to ensure all the logs happened as expected. 
 
+***The method UnitTestAsserterLogback.assertLogExpectations() is deprecated, use UnitTestAsserterLogback.assertLogExpectations(false) instead***
+
+
+
 ***Usage:***
 
 ~~~Java
@@ -71,8 +75,14 @@ spyAppender.addExpectation(Level.INFO, message);
         
 //Execute your code
 
-//Calls assert method        
-spyAppender.assertLogExpectations();
+//Calls assert method
+/*False means the the logs has to happen in the same order 
+as the expectations an the exact same logs hapened, */
+/*True means that lib will only check if the expectations happened 
+regardless of any extra ones, 
+also it will not care for order that it was called.
+*/
+spyAppender.assertLogExpectations(false);
 ~~~
 
 ***Example:***
@@ -90,7 +100,7 @@ public void test() {
 	
 	LOGGER.info(message, param1, param2);
 	
-	spyAppender.assertLogExpectations();
+	spyAppender.assertLogExpectations(false);
 }
 ~~~
 
