@@ -1,5 +1,6 @@
 package com.github.spartatech.testutils.logback;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.junit.ComparisonFailure;
@@ -10,6 +11,7 @@ import com.github.spartatech.testutils.logback.constant.ExpectValue;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import junit.framework.AssertionFailedError;
 
 
 /** 
@@ -71,50 +73,94 @@ public class UnitTestAsserterLogback  {
      * Analyzes in order and all logs supposed to be there 
      * 
      * @throws AssertionError Throws an assertion error when the asserts fail
+     * @deprecated this method will be remove in future releases, please use {@code UnitTestAsserterLogback.assertLogExpectations(false)} instead
      */
+    @Deprecated
     public void assertLogExpectations() throws AssertionError {
-        if (events.size() != expectations.size()) {
-            throw new ComparisonFailure("Invalid number of messages", String.valueOf(expectations.size()), String.valueOf(events.size()));
-        }
-        
-        for (ILoggingEvent event : events) {
-
-            LogEntryItem entry = expectations.remove();
-
-            if (!entry.getMessage().equals(event.getMessage())) {
-                throw new ComparisonFailure("Message mismatch", entry.getMessage(), event.getMessage());
+    	assertLogExpectations(false);
+    }    
+    
+    /**
+     * Replay expectations to check if all logs happened.
+     * Analyzes in order and all logs supposed to be there 
+     * 
+     * @param ignoreExtraMessages false -> if any message other than ones expected happens it fail, also check in order, 
+     * 							  true -> ensure that messages that were expected happens, allows extra messages and does not check message order 
+     * @throws AssertionError Throws an assertion error when the asserts fail
+     */
+	public void assertLogExpectations(boolean ignoreExtraMessages) throws AssertionError {
+    	if (!ignoreExtraMessages) {
+            if (events.size() != expectations.size()) {
+                throw new ComparisonFailure("Invalid number of messages", String.valueOf(expectations.size()), String.valueOf(events.size()));
             }
             
-            if (entry.getLevel() != event.getLevel()) {
-                throw new ComparisonFailure("LogLevel mismatch", entry.getLevel().toString(), event.getLevel().toString());
-            }
-            
-            int expectedSize = entry.getParams() == null ? 0 : entry.getParams().length;
-            int actualSize = event.getArgumentArray() == null ? 0 : event.getArgumentArray().length;
-            if (expectedSize != actualSize) {
-                throw new ComparisonFailure("Incorrect number of params", 
-                                            entry.getParams()== null ? "0" : String.valueOf(entry.getParams().length) , 
-                                            event.getArgumentArray() == null ? "0" : String.valueOf(event.getArgumentArray().length));
-            }
+            for (ILoggingEvent event : events) {
 
-            for (int i = 0; i < entry.getParams().length; i++) {
-                Object expectedParam = entry.getParams()[i];
-                Object actualParam = event.getArgumentArray()[i];
+                LogEntryItem entry = expectations.remove();
 
-                if (ExpectValue.ANY == expectedParam) {
-                    continue;
+                if (!entry.getMessage().equals(event.getMessage())) {
+                    throw new ComparisonFailure("Message mismatch", entry.getMessage(), event.getMessage());
                 }
                 
-                if (expectedParam == null && actualParam == null) {
-                    continue;
-                } else if (expectedParam == null && actualParam != null) {
-                    throw new ComparisonFailure("Param [" + i + "] mismatch", "null", actualParam.toString());
-                } else if (!expectedParam.equals(actualParam)) {
-                    throw new ComparisonFailure("Param [" + i + "] mismatch", expectedParam == null ? "NULL" : expectedParam.toString(), actualParam == null ? "NULL" : actualParam.toString());
-                }
+                compareEntries(event, entry);
+            }
+    	} else {
+    		for (LogEntryItem entry : expectations) {
+    			boolean foundMatch = false;
+    			for(ILoggingEvent event : events) {
+    				if (entry.getMessage().equals(event.getMessage())) {
+    					try {
+    						compareEntries(event, entry);
+    						foundMatch = true;
+    					} catch (ComparisonFailure e) {
+    						//Error happened not a match
+    					}
+    				}
+    			}
+    			if (!foundMatch) {
+    				throw new AssertionFailedError("Message ["+entry + "] not found");
+    			}
+            }
+    	}
+    }
+    
+
+    /**
+     * Compares an expected entry with a logging event, checking if the level, and param match.
+     * 
+     * @param event Log event that happened
+     * @param entry expected entry
+     */
+    private void compareEntries (ILoggingEvent event, LogEntryItem entry) {
+        if (entry.getLevel() != event.getLevel()) {
+            throw new ComparisonFailure("LogLevel mismatch", entry.getLevel().toString(), event.getLevel().toString());
+        }
+        
+        int expectedSize = entry.getParams() == null ? 0 : entry.getParams().length;
+        int actualSize = event.getArgumentArray() == null ? 0 : event.getArgumentArray().length;
+        if (expectedSize != actualSize) {
+            throw new ComparisonFailure("Incorrect number of params", 
+                                        entry.getParams()== null ? "0" : String.valueOf(entry.getParams().length) , 
+                                        event.getArgumentArray() == null ? "0" : String.valueOf(event.getArgumentArray().length));
+        }
+
+        for (int i = 0; i < entry.getParams().length; i++) {
+            Object expectedParam = entry.getParams()[i];
+            Object actualParam = event.getArgumentArray()[i];
+
+            if (ExpectValue.ANY == expectedParam) {
+                continue;
+            }
+            
+            if (expectedParam == null && actualParam == null) {
+                continue;
+            } else if (expectedParam == null && actualParam != null) {
+                throw new ComparisonFailure("Param [" + i + "] mismatch", "null", actualParam.toString());
+            } else if (!expectedParam.equals(actualParam)) {
+                throw new ComparisonFailure("Param [" + i + "] mismatch", expectedParam == null ? "NULL" : expectedParam.toString(), actualParam == null ? "NULL" : actualParam.toString());
             }
         }
-    }    
+    }
     
     /**
      * Attached the log to the logback. 
@@ -171,5 +217,21 @@ public class UnitTestAsserterLogback  {
         public Object[] getParams() {
             return params;
         }
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("[level=");
+			builder.append(level);
+			builder.append(", message=");
+			builder.append(message);
+			builder.append(", params=");
+			builder.append(Arrays.toString(params));
+			builder.append("]");
+			return builder.toString();
+		}
     }
 };

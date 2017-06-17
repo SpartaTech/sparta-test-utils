@@ -9,6 +9,7 @@ import com.github.spartatech.testutils.logback.UnitTestAsserterLogback;
 import com.github.spartatech.testutils.logback.constant.ExpectValue;
 
 import ch.qos.logback.classic.Level;
+import junit.framework.AssertionFailedError;
 
 /** 
  * 
@@ -33,7 +34,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test(expected=ComparisonFailure.class)
@@ -45,7 +46,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test(expected=ComparisonFailure.class)
@@ -55,7 +56,7 @@ public class TestUnitTestAsserterLogback {
         final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
         spyAppender.addExpectation(Level.INFO, message);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
         
     }
     
@@ -69,7 +70,7 @@ public class TestUnitTestAsserterLogback {
         LOGGER.info(message);
         LOGGER.info("other message");
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
         
     }
     
@@ -82,7 +83,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info("other message");
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
         
     }
     
@@ -97,7 +98,7 @@ public class TestUnitTestAsserterLogback {
         LOGGER.info(message);
         LOGGER.info("other message");
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test
@@ -111,7 +112,7 @@ public class TestUnitTestAsserterLogback {
         LOGGER.info(message);
         LOGGER.info("other message");
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test
@@ -129,7 +130,7 @@ public class TestUnitTestAsserterLogback {
         logger.info(message);
         logger.info("other message");
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test
@@ -142,7 +143,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message, param1, param2);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test(expected=ComparisonFailure.class)
@@ -155,7 +156,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message, param1, param2);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test(expected=ComparisonFailure.class)
@@ -168,7 +169,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message, param1);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test(expected=ComparisonFailure.class)
@@ -181,7 +182,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message, param1, param2, "bla");
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test(expected=ComparisonFailure.class)
@@ -194,7 +195,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message, param2, param1);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test
@@ -207,7 +208,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message, param1, param2);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test
@@ -219,7 +220,7 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message, param1, null);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
     }
     
     @Test(expected=ComparisonFailure.class)
@@ -232,7 +233,82 @@ public class TestUnitTestAsserterLogback {
         
         LOGGER.info(message, param1, null);
         
-        spyAppender.assertLogExpectations();
+        spyAppender.assertLogExpectations(false);
+    }
+
+    /* ********* Test method with ignore == true    ************** */ 
+    
+    @Test(expected=AssertionFailedError.class)
+    public void testLogByClassNoMessagesIgnoreExtra() {
+        final String message = "teste message";
+        
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
+        spyAppender.addExpectation(Level.INFO, message);
+        
+        spyAppender.assertLogExpectations(true);
+        
+    }
+    
+    @Test
+    public void testLogByClassMessagesMatchOrderedIgnoreExtra() {
+        final String message1 = "teste message1";
+        final String message2 = "teste message2";
+        
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
+        spyAppender.addExpectation(Level.INFO, message1);
+        spyAppender.addExpectation(Level.WARN, message2);
+        
+        LOGGER.info(message1);
+        LOGGER.warn(message2);
+        
+        spyAppender.assertLogExpectations(true);
+    }
+    
+    @Test
+    public void testLogByClassMessagesMatchNotOrderedIgnoreExtra() {
+        final String message1 = "teste message1";
+        final String message2 = "teste message2";
+        
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
+        spyAppender.addExpectation(Level.INFO, message1);
+        spyAppender.addExpectation(Level.WARN, message2);
+        
+        LOGGER.warn(message2);
+        LOGGER.info(message1);
+        
+        spyAppender.assertLogExpectations(true);
+    }
+    
+    @Test
+    public void testLogByClassMessagesWithExtraIgnoreExtra() {
+        final String message1 = "teste message1";
+        final String message2 = "teste message2";
+        
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
+        spyAppender.addExpectation(Level.INFO, message1);
+        spyAppender.addExpectation(Level.WARN, message2);
+        
+        LOGGER.warn(message2);
+        LOGGER.info(message1);
+        LOGGER.error("Extra message");
+        
+        spyAppender.assertLogExpectations(true);
+    }
+    
+    @Test(expected=AssertionFailedError.class)
+    public void testLogByClassMessagesWrongLevelIgnoreExtra() {
+        final String message1 = "teste message1";
+        final String message2 = "teste message2";
+        
+        final UnitTestAsserterLogback spyAppender = new UnitTestAsserterLogback(this.getClass());
+        spyAppender.addExpectation(Level.INFO, message1);
+        spyAppender.addExpectation(Level.WARN, message2);
+        
+        LOGGER.debug(message2);
+        LOGGER.info(message1);
+        LOGGER.error("Extra message");
+        
+        spyAppender.assertLogExpectations(true);
     }
     
 }
