@@ -1,6 +1,10 @@
 package test.com.github.spartatech.testutils.collection;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -104,6 +108,98 @@ public class TestCollectionAssert extends CollectionAssert {
         final List<TestObj> listTwo = new ArrayList<>(listOne);
 
         CollectionAssert.assertList(listOne, listTwo, (a,b) -> a.equals(b)? 0 : 1);
+    }
+    
+    @Test
+    public void testAssertNullFieldLeftSide () throws Exception {
+        final Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2018);
+        cal.set(Calendar.MONTH, 02);
+        cal.set(Calendar.DATE, 03);
+        cal.set(Calendar.HOUR, 10);
+        cal.set(Calendar.MINUTE, 11);
+        cal.set(Calendar.SECOND, 13);
+        final Date date = cal.getTime();
+        
+        final List<TestObj> listOne = new ArrayList<>();
+        listOne.add(new TestObj("one", 1, date, 1L));
+        listOne.add(new TestObj("two", 2, null, 2L));
+
+        final List<TestObj> listTwo = new ArrayList<>();
+        listTwo.add(new TestObj("one", 1, date, 1L));
+        listTwo.add(new TestObj("two", 2, date, 2L));
+
+        try {
+            CollectionAssert.assertListByReflection(listOne, listTwo);
+            fail("Expected AssertionError");
+        } catch (AssertionError e) {
+            e.printStackTrace();
+            
+            final StringBuilder expectedMessage = new StringBuilder("Lists are not similar.");
+            expectedMessage.append(System.getProperty("line.separator"));
+            expectedMessage.append("List one: Remaining: " + ReflectionToStringBuilder.toString(listOne.get(1)));
+            expectedMessage.append(System.getProperty("line.separator"));
+            expectedMessage.append("List two: Remaining: " + ReflectionToStringBuilder.toString(listTwo.get(1)));
+            expectedMessage.append(System.getProperty("line.separator"));
+            assertEquals(expectedMessage.toString(), e.getMessage());
+        }
+    }
+    
+    @Test
+    public void testAssertNullFieldRightSide () throws Exception {
+        final Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2018);
+        cal.set(Calendar.MONTH, 02);
+        cal.set(Calendar.DATE, 03);
+        cal.set(Calendar.HOUR, 10);
+        cal.set(Calendar.MINUTE, 11);
+        cal.set(Calendar.SECOND, 13);
+        final Date date = cal.getTime();
+        
+        final List<TestObj> listOne = new ArrayList<>();
+        listOne.add(new TestObj("one", 1, date, 1L));
+        listOne.add(new TestObj("two", 2, date, 2L));
+
+        final List<TestObj> listTwo = new ArrayList<>();
+        listTwo.add(new TestObj("one", 1, date, 1L));
+        listTwo.add(new TestObj("two", 2, null, 2L));
+
+        try {
+            CollectionAssert.assertListByReflection(listOne, listTwo);
+            fail("Expected AssertionError");
+        } catch (AssertionError e) {
+            e.printStackTrace();
+            
+            final StringBuilder expectedMessage = new StringBuilder("Lists are not similar.");
+            expectedMessage.append(System.getProperty("line.separator"));
+            expectedMessage.append("List one: Remaining: " + ReflectionToStringBuilder.toString(listOne.get(1)));
+            expectedMessage.append(System.getProperty("line.separator"));
+            expectedMessage.append("List two: Remaining: " + ReflectionToStringBuilder.toString(listTwo.get(1)));
+            expectedMessage.append(System.getProperty("line.separator"));
+            assertEquals(expectedMessage.toString(), e.getMessage());
+        }
+    }
+    
+    @Test
+    public void testAssertNullFieldBothSides () throws Exception {
+        final Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 2018);
+        cal.set(Calendar.MONTH, 02);
+        cal.set(Calendar.DATE, 03);
+        cal.set(Calendar.HOUR, 10);
+        cal.set(Calendar.MINUTE, 11);
+        cal.set(Calendar.SECOND, 13);
+        final Date date = cal.getTime();
+        
+        final List<TestObj> listOne = new ArrayList<>();
+        listOne.add(new TestObj("one", 1, date, 1L));
+        listOne.add(new TestObj("two", 2, null, 2L));
+
+        final List<TestObj> listTwo = new ArrayList<>();
+        listTwo.add(new TestObj("one", 1, date, 1L));
+        listTwo.add(new TestObj("two", 2, null, 2L));
+
+        CollectionAssert.assertListByReflection(listOne, listTwo);
     }
     
     class TestObj {

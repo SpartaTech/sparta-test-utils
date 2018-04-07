@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * 
  * History: 
  *    Jan 14, 2017 - ddiehl
+ *    Apr 06, 2018 - ddiehl - Adjusting problem with asseertListByReflection with null field.
  *  
  */
 public abstract class CollectionAssert {
@@ -83,14 +84,29 @@ public abstract class CollectionAssert {
                         Object val1 = field.get(item1);
                         Object val2 = field.get(item2);
                         field.setAccessible(false);
-                        String val1Str = ReflectionToStringBuilder.toString(val1, ToStringStyle.SHORT_PREFIX_STYLE);
-                        String val2Str = ReflectionToStringBuilder.toString(val2, ToStringStyle.SHORT_PREFIX_STYLE);
-                        if (!val1Str.equals(val2Str)) {
-                            LOGGER.debug("Field=[{}]. val1={}, val2={}", field.getName(), val1, val2);
+                        
+                        if (val1 == null && val2 != null) {
+                           LOGGER.debug("For Field {}: val1 was null, but val2 was not null");
+                           return 1;
+                        }
+
+                        if (val1 != null && val2 == null) {
+                            LOGGER.debug("For Field {}: val1 was not null, but val2 was null");
                             return 1;
+                         }
+                        
+                        if (val1== null && val2 == null) {
+                            LOGGER.debug("Both are null considering same");
+                        } else {
+                            String val1Str = ReflectionToStringBuilder.toString(val1, ToStringStyle.SHORT_PREFIX_STYLE);
+                            String val2Str = ReflectionToStringBuilder.toString(val2, ToStringStyle.SHORT_PREFIX_STYLE);
+                            if (!val1Str.equals(val2Str)) {
+                                LOGGER.debug("Field=[{}]. val1={}, val2={}", field.getName(), val1, val2);
+                                return 1;
+                            }
                         }
                     } catch (Exception e) {
-                        Assert.fail("Exception not expected" + e.getMessage());
+                        Assert.fail("Exception not expected comparing field "+ field.getName() + ": " + e.getMessage());
                     }
                 }
             }
