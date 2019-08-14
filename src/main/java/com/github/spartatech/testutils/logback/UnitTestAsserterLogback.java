@@ -112,6 +112,7 @@ public class UnitTestAsserterLogback  {
     					try {
     						compareEntries(event, entry);
     						foundMatch = true;
+    						break;
     					} catch (ComparisonFailure e) {
     						//Error happened not a match
     					}
